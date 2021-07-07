@@ -47,17 +47,17 @@ config = oldconfig
 # Gets the configuration file for the directory where the execution file resides
 try:
     cfg_list = glob.glob("{}/*.cfg".format(cwd))
-    config = cfg_list[0].replace('\\', '/')
+    config = os.path.relpath(cfg_list[0])
     del cfg_list
 except IndexError:
     try:
         cfg_list = glob.glob("{}/*.cfg".format(pwd))
-        config = cfg_list[0].replace('\\', '/')
+        config = os.path.relpath(cfg_list[0])
         del cfg_list
     except IndexError:
         print("Unfound *.cfg")
         exit()
-
+config = config.replace('\\', '/')
 
 def findtool(tool):
     if type(tool) != type(''):
